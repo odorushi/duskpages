@@ -3,7 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dusk Pages — Marcapáginas personalizados</title>
+<title>Dusk Pages — Marcapáginas personalizados hechos a mano en Arica</title>
+
+<!-- SEO básico -->
+<meta name="description" content="Marcapáginas ilustrados y personalizados a mano por Dusk Pages. Diseños góticos, botánicos o a tu gusto. Envío a todo Chile, hecho en Arica.">
+<meta name="keywords" content="marcapaginas personalizados, marcapaginas hechos a mano, ilustracion gotica, dusk pages, marcapaginas Chile, marcapaginas Arica, regalo personalizado">
+<meta name="author" content="Dusk Pages">
+<link rel="canonical" href="https://odorushi.github.io/duskpages/">
+
+<!-- Open Graph (para que se vea bien al compartir en redes/WhatsApp) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Dusk Pages — Marcapáginas personalizados hechos a mano">
+<meta property="og:description" content="Ilustro lo que me pidas: gótico, botánico o a tu gusto. Cada marcapágina se hace pensando en quien lo va a usar.">
+<meta property="og:image" content="https://odorushi.github.io/duskpages/assets/hero-marcapagina.webp">
+<meta property="og:url" content="https://odorushi.github.io/duskpages/">
+<meta property="og:locale" content="es_CL">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dusk Pages — Marcapáginas personalizados hechos a mano">
+<meta name="twitter:description" content="Ilustro lo que me pidas: gótico, botánico o a tu gusto. Envío a todo Chile.">
+<meta name="twitter:image" content="https://odorushi.github.io/duskpages/assets/hero-marcapagina.webp">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,39 +63,48 @@
 
   a{ color:inherit; }
 
-  /* ---------- Silueta de marcapágina (elemento firma) ---------- */
+  /* ---------- Silueta de marcapágina (elemento firma) ----------
+     Rectángulo con punta triangular en la base, como un
+     marcapágina real terminado en banderín. Se reutiliza en
+     tarjetas, marco del héroe, foto de galería y carrusel. */
   .bookmark-shape{
     clip-path: polygon(0 0, 100% 0, 100% 84%, 50% 100%, 0 84%);
   }
 
-  /* ---------- Textura de degradado místico ---------- */
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
+  /* ---------- Textura de fondo sutil ---------- */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
     background-image:
       radial-gradient(circle at 20% 20%, rgba(248,248,248,0.035), transparent 40%),
       radial-gradient(circle at 80% 70%, rgba(248,248,248,0.03), transparent 45%);
-    pointer-events: none;
-    z-index: 0;
+    pointer-events:none;
+    z-index:0;
   }
 
-  /* ---------- FONDO PERSONALIZADO ---------- */
+  /* ---------- FONDO PERSONALIZADO (opcional) ----------
+     Para poner tu propia imagen de fondo (patrón, textura, etc):
+     1. Copia tu imagen dentro de la carpeta "assets"
+     2. Reemplaza 'tu-fondo.jpg' por el nombre real de tu archivo
+     3. Quita el comentario /* y * / que rodean el bloque de abajo
+     El fondo queda detrás de todo el contenido, con blur para
+     que no compita con el texto. Ajusta 'opacity' si lo quieres
+     más sutil o más marcado. */
+  /*
   .fondo-personalizado{
     position:fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image:url('assets/Pattern.webp');
-    background-size:auto;
-    background-repeat:repeat;
-    filter:blur(8px);
+    inset:0;
+    background-image:url('assets/tu-fondo.jpg');
+    background-size:cover;
+    background-position:center;
+    filter:blur(6px);
     opacity:0.25;
-    transform:scale(1.02);
-    z-index:-1;
+    transform:scale(1.05);
+    z-index:0;
     pointer-events:none;
   }
+  */
 
   section{ position:relative; z-index:1; }
 
@@ -425,7 +454,9 @@
 </head>
 <body>
 
-<div class="fondo-personalizado"></div>
+<!-- Si activaste el fondo personalizado en el CSS de arriba,
+     descomenta la línea de abajo también: -->
+<!-- <div class="fondo-personalizado"></div> -->
 
 <header>
   <nav class="navbar">
@@ -444,7 +475,7 @@
     </div>
     <div class="hero-visual">
       <div class="hero-frame">
-        <img src="assets/hero-marcapagina.webp" alt="Marcapágina ilustrado a mano, diseño asbtracto">
+        <img src="assets/hero-marcapagina.webp" alt="Marcapágina ilustrado a mano, diseño de cielo nocturno">
         <span class="hero-caption">— hecho a pedido —</span>
       </div>
     </div>
@@ -469,7 +500,7 @@
       <div class="valor-card">
         <span class="marca">&#8224;</span>
         <h3>Envío a todo Chile</h3>
-        <p>Despacho por Correos de Chile. Si eres de la misma ciudad, coordinamos entrega en persona sin costo.</p>
+        <p>Despacho por Correos de Chile. Si eres de Arica, coordinamos entrega en persona sin costo.</p>
       </div>
     </div>
   </div>
@@ -481,10 +512,10 @@
     <p class="seccion-sub">Algunos de los estilos que ya he creado — cada uno distinto, como quien lo pidió.</p>
     <div class="galeria-mesa">
       <div class="foto-item">
-        <img src="assets/galeria-1.webp" alt="Marcapágina botánico ilustrado, Puya venusta">
+        <img src="assets/galeria-1.webp" alt="Marcapágina botánico ilustrado, Puya Venusta">
       </div>
       <div class="foto-item">
-        <img src="assets/galeria-2.webp" alt="Marcapágina con ilustración en blanco y negro, Máscaras oni">
+        <img src="assets/galeria-2.webp" alt="Marcapágina con ilustración de rostro con cuernos, estilo gótico">
       </div>
       <div class="foto-item">
         <img src="assets/galeria-3.webp" alt="Colección de marcapáginas ilustrados con distintos estilos">
@@ -518,7 +549,7 @@
   <div class="wrap">
     <h2>¿Listo para el tuyo?</h2>
     <p>Cuéntame tu idea y lo hacemos realidad.</p>
-    <a class="btn-principal" href="https://www.instagram.com/v.elnoir" target="_blank">Escríbeme por Instagram</a>
+    <a class="btn-principal" href="https://wa.me/56987442010?text=Hola%2C%20quiero%20un%20marcap%C3%A1gina%20personalizado" target="_blank">Escríbeme por WhatsApp</a>
   </div>
 </section>
 
@@ -528,7 +559,7 @@
     <a href="https://www.tiktok.com/@s_hxne" target="_blank">TikTok</a>
     <a href="mailto:velnoirart@gmail.com">Correo</a>
   </div>
-  <p>Dusk Pages — marcapáginas personalizados, hechos en algún lugar de Chile.</p>
+  <p>Dusk Pages — marcapáginas personalizados, hechos en Arica, Chile.</p>
 </footer>
 
 <script>
@@ -551,7 +582,7 @@
     {
       numero: "04",
       titulo: "Recíbelo",
-      texto: "Viaja por Correos hasta tu rincón de Chile. Y si coincidimos en la misma ciudad, nos encontramos para entregártelo."
+      texto: "Llega hasta ti por Correos de Chile, o si estás en Arica, nos vemos en persona para entregarlo."
     }
   ];
 
