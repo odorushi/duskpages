@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dusk Pages — Marcapáginas personalizados</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Permanent+Marker&family=Pirata+One&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#161616;
+    --fg:#f8f8f8;
+    --muted:#8e8e8e;
+    --line: rgba(248,248,248,0.14);
+    --line-strong: rgba(248,248,248,0.28);
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.15rem;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  ::selection{ background:var(--fg); color:var(--bg); }
+
+  img{ max-width:100%; display:block; }
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  a{ color:inherit; }
+
+  /* ---------- Silueta de marcapágina (elemento firma) ---------- */
+  .bookmark-shape{
+    clip-path: polygon(0 0, 100% 0, 100% 84%, 50% 100%, 0 84%);
+  }
+
+  /* ---------- Textura de degradado místico ---------- */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(248,248,248,0.035), transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(248,248,248,0.03), transparent 45%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ---------- FONDO PERSONALIZADO ---------- */
+  .fondo-personalizado{
+    position:fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:url('assets/Pattern.webp');
+    background-size:auto;
+    background-repeat:repeat;
+    filter:blur(8px);
+    opacity:0.25;
+    transform:scale(1.02);
+    z-index:-1;
+    pointer-events:none;
+  }
+
+  section{ position:relative; z-index:1; }
+
+  /* ================= NAV ================= */
+  header{
+    position:fixed;
+    top:0; left:0; width:100%;
+    z-index:50;
+    background:rgba(22,22,22,0.72);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .navbar{
+    max-width:1180px;
+    margin:0 auto;
+    padding:16px 32px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .brand{
+    font-family:'UnifrakturCook', cursive;
+    font-size:1.9rem;
+    letter-spacing:1px;
+  }
+  .nav-cta{
+    font-family:'Pirata One', serif;
+    font-size:1.3rem;
+    letter-spacing:0.5px;
+    padding:6px 22px;
+    border:1px solid var(--line-strong);
+    text-decoration:none;
+    transition:background .2s ease, color .2s ease;
+  }
+  .nav-cta:hover{ background:var(--fg); color:var(--bg); }
+
+  /* ================= HERO ================= */
+  .hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding:140px 0 80px;
+  }
+  .hero .wrap{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:60px;
+    align-items:center;
+  }
+  .hero-eyebrow{
+    font-family:'Pirata One', serif;
+    color:var(--muted);
+    font-size:1.15rem;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    margin-bottom:18px;
+    display:inline-block;
+  }
+  .hero h1{
+    font-family:'UnifrakturCook', cursive;
+    font-size:4.6rem;
+    line-height:1.05;
+    text-shadow:0 0 30px rgba(248,248,248,0.25);
+    margin-bottom:22px;
+  }
+  .hero p.lede{
+    font-size:1.4rem;
+    font-style:italic;
+    color:rgba(248,248,248,0.85);
+    max-width:46ch;
+    margin-bottom:34px;
+  }
+  .btn-principal{
+    display:inline-block;
+    font-family:'Pirata One', serif;
+    font-size:1.5rem;
+    letter-spacing:1px;
+    text-decoration:none;
+    color:var(--bg);
+    background:var(--fg);
+    padding:14px 34px;
+    border:1px solid var(--fg);
+    transition:transform .2s ease, background .2s ease, color .2s ease;
+  }
+  .btn-principal:hover{
+    background:transparent;
+    color:var(--fg);
+    transform:translateY(-2px);
+  }
+
+  .hero-visual{
+    position:relative;
+    display:flex;
+    justify-content:center;
+  }
+  .hero-frame{
+    width:280px;
+    transform:rotate(-4deg);
+    position:relative;
+  }
+  .hero-frame::before{
+    content:"";
+    position:absolute;
+    inset:-8px -8px -8px -8px;
+    background:var(--fg);
+    clip-path: polygon(0 0, 100% 0, 100% 87%, 50% 100%, 0 87%);
+    z-index:0;
+  }
+  .hero-frame img{
+    position:relative;
+    z-index:1;
+    clip-path: polygon(0 0, 100% 0, 100% 84%, 50% 100%, 0 84%);
+    width:100%;
+    height:420px;
+    object-fit:cover;
+    filter:contrast(1.05) saturate(0.9);
+  }
+  .hero-caption{
+    position:absolute;
+    bottom:-38px;
+    left:50%;
+    transform:translateX(-50%) rotate(-2deg);
+    font-family:'Permanent Marker', cursive;
+    font-size:1rem;
+    color:var(--muted);
+    white-space:nowrap;
+  }
+
+  /* ================= SECCIONES GENERALES ================= */
+  .seccion{ padding:110px 0; }
+  .seccion-titulo{
+    font-family:'Pirata One', serif;
+    font-size:2.6rem;
+    letter-spacing:1px;
+    text-align:center;
+    margin-bottom:12px;
+  }
+  .seccion-sub{
+    text-align:center;
+    color:var(--muted);
+    font-size:1.2rem;
+    font-style:italic;
+    max-width:56ch;
+    margin:0 auto 64px;
+  }
+
+  /* ================= VALOR ================= */
+  .valor-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:36px;
+  }
+  .valor-card{
+    background:rgba(248,248,248,0.03);
+    border-top:1px solid var(--line-strong);
+    padding:38px 26px 52px;
+    text-align:center;
+    position:relative;
+  }
+  .valor-card .marca{
+    font-family:'UnifrakturCook', cursive;
+    font-size:2.2rem;
+    display:block;
+    margin-bottom:14px;
+    color:var(--fg);
+  }
+  .valor-card h3{
+    font-family:'Pirata One', serif;
+    font-size:1.5rem;
+    letter-spacing:0.5px;
+    margin-bottom:12px;
+    font-weight:400;
+  }
+  .valor-card p{ color:rgba(248,248,248,0.75); font-size:1.1rem; }
+
+  /* ================= GALERÍA ================= */
+  .galeria-mesa{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:50px 40px;
+    padding-top:10px;
+  }
+  .foto-item{
+    position:relative;
+    width:260px;
+  }
+  .foto-item:nth-child(1){ transform:rotate(-5deg); }
+  .foto-item:nth-child(2){ transform:rotate(4deg) translateY(20px); }
+  .foto-item:nth-child(3){ transform:rotate(-3deg) translateY(-8px); }
+  .foto-item::before{
+    content:"";
+    position:absolute;
+    inset:-7px -7px -7px -7px;
+    background:var(--fg);
+    clip-path: polygon(0 0, 100% 0, 100% 87%, 50% 100%, 0 87%);
+    z-index:0;
+    transition:transform .3s ease;
+  }
+  .foto-item img{
+    position:relative;
+    z-index:1;
+    clip-path: polygon(0 0, 100% 0, 100% 84%, 50% 100%, 0 84%);
+    width:100%;
+    height:320px;
+    object-fit:cover;
+    filter:contrast(1.05);
+    transition:transform .3s ease;
+  }
+  .foto-item:hover{ transform:rotate(0deg) scale(1.04); z-index:5; }
+  .foto-item:hover::before{ transform:translate(3px,-3px); }
+
+  /* ================= CÓMO FUNCIONA (carrusel) ================= */
+  .carrusel-wrap{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:28px;
+    max-width:640px;
+    margin:0 auto;
+  }
+  .flecha{
+    background:none;
+    border:1px solid var(--line-strong);
+    color:var(--fg);
+    width:46px; height:46px;
+    border-radius:50%;
+    font-size:1.4rem;
+    font-family:'Cormorant Garamond', serif;
+    cursor:pointer;
+    flex-shrink:0;
+    transition:background .2s ease, color .2s ease;
+  }
+  .flecha:hover{ background:var(--fg); color:var(--bg); }
+
+  .paso-card{
+    position:relative;
+    flex:1;
+    min-height:280px;
+  }
+  .paso-card::before{
+    content:"";
+    position:absolute;
+    inset:-7px -7px -7px -7px;
+    background:var(--fg);
+    clip-path: polygon(0 0, 100% 0, 100% 89%, 50% 100%, 0 89%);
+    z-index:0;
+  }
+  .paso-inner{
+    position:relative;
+    z-index:1;
+    background:var(--bg);
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+    height:100%;
+    padding:44px 34px 60px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:14px;
+  }
+  .paso-numero{
+    font-family:'UnifrakturCook', cursive;
+    font-size:2.8rem;
+    color:var(--muted);
+  }
+  .paso-inner h3{
+    font-family:'Pirata One', serif;
+    font-size:1.6rem;
+    font-weight:400;
+    letter-spacing:0.5px;
+  }
+  .paso-inner p{ color:rgba(248,248,248,0.75); }
+
+  .puntos{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-top:34px;
+  }
+  .punto{
+    width:9px; height:9px;
+    border-radius:50%;
+    background:var(--line-strong);
+    border:none;
+    cursor:pointer;
+    transition:background .2s ease, transform .2s ease;
+    padding:0;
+  }
+  .punto.activo{ background:var(--fg); transform:scale(1.3); }
+
+  /* ================= CTA FINAL ================= */
+  .cta-final{
+    text-align:center;
+    padding:130px 0;
+    border-top:1px solid var(--line);
+  }
+  .cta-final h2{
+    font-family:'UnifrakturCook', cursive;
+    font-size:3rem;
+    margin-bottom:20px;
+  }
+  .cta-final p{
+    color:rgba(248,248,248,0.8);
+    font-size:1.3rem;
+    font-style:italic;
+    margin-bottom:38px;
+  }
+
+  /* ================= FOOTER ================= */
+  footer{
+    padding:50px 0 60px;
+    text-align:center;
+    border-top:1px solid var(--line);
+    color:var(--muted);
+    font-size:1.05rem;
+  }
+  footer .redes{
+    display:flex;
+    justify-content:center;
+    gap:28px;
+    margin-bottom:16px;
+    font-family:'Pirata One', serif;
+    font-size:1.2rem;
+  }
+  footer .redes a{ text-decoration:none; transition:color .2s ease; }
+  footer .redes a:hover{ color:var(--fg); }
+
+  /* ================= RESPONSIVO ================= */
+  @media (max-width:880px){
+    .hero .wrap{ grid-template-columns:1fr; text-align:center; }
+    .hero-eyebrow{ display:block; }
+    .hero p.lede{ margin-left:auto; margin-right:auto; }
+    .hero h1{ font-size:3.2rem; }
+    .valor-grid{ grid-template-columns:1fr; }
+    .carrusel-wrap{ flex-direction:column; }
+    .flecha{ order:3; }
+    .foto-item{ width:220px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; }
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="fondo-personalizado"></div>
+
+<header>
+  <nav class="navbar">
+    <div class="brand">Dusk Pages</div>
+    <a class="nav-cta" href="#contacto">Escríbeme</a>
+  </nav>
+</header>
+
+<section class="hero" id="inicio">
+  <div class="wrap">
+    <div>
+      <span class="hero-eyebrow">Marcapáginas hechos a mano</span>
+      <h1>El tuyo,<br>no uno cualquiera</h1>
+      <p class="lede">Ilustro lo que me pidas — desde algo botánico y delicado hasta algo oscuro o fantástico. Cada marcapágina se hace pensando en la persona que lo va a usar.</p>
+      <a class="btn-principal" href="#pasos">Ver cómo funciona</a>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-frame">
+        <img src="assets/hero-marcapagina.webp" alt="Marcapágina ilustrado a mano, diseño asbtracto">
+        <span class="hero-caption">— hecho a pedido —</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion" id="valor">
+  <div class="wrap">
+    <h2 class="seccion-titulo">¿Por qué Dusk Pages?</h2>
+    <p class="seccion-sub">No hay producción en serie. Cada pieza nace de una conversación contigo.</p>
+    <div class="valor-grid">
+      <div class="valor-card">
+        <span class="marca">&#8224;</span>
+        <h3>100% personalizado</h3>
+        <p>Tú eliges el estilo: gótico, botánico, tierno o fantástico. El diseño se piensa para ti, no al revés.</p>
+      </div>
+      <div class="valor-card">
+        <span class="marca">&#8224;</span>
+        <h3>Hecho a mano</h3>
+        <p>Cada trazo es ilustrado y coloreado a mano, sin plantillas repetidas ni impresión masiva.</p>
+      </div>
+      <div class="valor-card">
+        <span class="marca">&#8224;</span>
+        <h3>Envío a todo Chile</h3>
+        <p>Despacho por Correos de Chile. Si eres de la misma ciudad, coordinamos entrega en persona sin costo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion" id="galeria">
+  <div class="wrap">
+    <h2 class="seccion-titulo">Los diseños hablan solos</h2>
+    <p class="seccion-sub">Algunos de los estilos que ya he creado — cada uno distinto, como quien lo pidió.</p>
+    <div class="galeria-mesa">
+      <div class="foto-item">
+        <img src="assets/galeria-1.webp" alt="Marcapágina botánico ilustrado, Puya venusta">
+      </div>
+      <div class="foto-item">
+        <img src="assets/galeria-2.webp" alt="Marcapágina con ilustración en blanco y negro, Máscaras oni">
+      </div>
+      <div class="foto-item">
+        <img src="assets/galeria-3.webp" alt="Colección de marcapáginas ilustrados con distintos estilos">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion" id="pasos">
+  <div class="wrap">
+    <h2 class="seccion-titulo">Cómo funciona</h2>
+    <p class="seccion-sub">Cuatro pasos, sin complicaciones.</p>
+
+    <div class="carrusel-wrap">
+      <button class="flecha" id="btnAnterior" aria-label="Paso anterior">‹</button>
+
+      <div class="paso-card">
+        <div class="paso-inner" id="pasoContenido">
+          <!-- se llena por JS -->
+        </div>
+      </div>
+
+      <button class="flecha" id="btnSiguiente" aria-label="Paso siguiente">›</button>
+    </div>
+
+    <div class="puntos" id="puntosPaso"></div>
+  </div>
+</section>
+
+<section class="cta-final" id="contacto">
+  <div class="wrap">
+    <h2>¿Listo para el tuyo?</h2>
+    <p>Cuéntame tu idea y lo hacemos realidad.</p>
+    <a class="btn-principal" href="https://www.instagram.com/v.elnoir" target="_blank">Escríbeme por Instagram</a>
+  </div>
+</section>
+
+<footer>
+  <div class="redes">
+    <a href="https://www.instagram.com/v.elnoir" target="_blank">Instagram</a>
+    <a href="https://www.tiktok.com/@s_hxne" target="_blank">TikTok</a>
+    <a href="mailto:velnoirart@gmail.com">Correo</a>
+  </div>
+  <p>Dusk Pages — marcapáginas personalizados, hechos en algún lugar de Chile.</p>
+</footer>
+
+<script>
+  const pasos = [
+    {
+      numero: "01",
+      titulo: "Elige tu vibra",
+      texto: "¿Gótico, botánico, o algo que dé un poco de miedo? Cuéntame qué habita tu imaginación."
+    },
+    {
+      numero: "02",
+      titulo: "Personaliza",
+      texto: "Tu nombre, una frase que te define, los colores de tu propio mundo — lo plasmo tal como lo sientes."
+    },
+    {
+      numero: "03",
+      titulo: "Extras opcionales",
+      texto: "Súmale un charm, un pequeño amuleto colgando de tu página favorita."
+    },
+    {
+      numero: "04",
+      titulo: "Recíbelo",
+      texto: "Viaja por Correos hasta tu rincón de Chile. Y si coincidimos en la misma ciudad, nos encontramos para entregártelo."
+    }
+  ];
+
+  let indice = 0;
+  const contenedor = document.getElementById('pasoContenido');
+  const puntosCont = document.getElementById('puntosPaso');
+
+  function renderPaso(){
+    const p = pasos[indice];
+    contenedor.innerHTML = `
+      <span class="paso-numero">${p.numero}</span>
+      <h3>${p.titulo}</h3>
+      <p>${p.texto}</p>
+    `;
+    [...puntosCont.children].forEach((pt, i) => {
+      pt.classList.toggle('activo', i === indice);
+    });
+  }
+
+  function renderPuntos(){
+    puntosCont.innerHTML = "";
+    pasos.forEach((_, i) => {
+      const b = document.createElement('button');
+      b.className = 'punto' + (i === indice ? ' activo' : '');
+      b.setAttribute('aria-label', 'Ir al paso ' + (i+1));
+      b.addEventListener('click', () => { indice = i; renderPaso(); });
+      puntosCont.appendChild(b);
+    });
+  }
+
+  document.getElementById('btnSiguiente').addEventListener('click', () => {
+    indice = (indice + 1) % pasos.length;
+    renderPaso();
+  });
+  document.getElementById('btnAnterior').addEventListener('click', () => {
+    indice = (indice - 1 + pasos.length) % pasos.length;
+    renderPaso();
+  });
+
+  renderPuntos();
+  renderPaso();
+</script>
+
+</body>
+</html>
