@@ -433,7 +433,82 @@
   }
   footer .redes a{ text-decoration:none; transition:color .2s ease; }
   footer .redes a:hover{ color:var(--fg); }
-
+  
+/* ================= POPUP REGALO ================= */
+  .popup-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.75);
+    backdrop-filter:blur(4px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .3s ease;
+  }
+  .popup-overlay.visible{
+    opacity:1;
+    pointer-events:auto;
+  }
+  .popup-caja{
+    position:relative;
+    background:var(--bg);
+    border:1px solid var(--line-strong);
+    max-width:420px;
+    width:90%;
+    padding:48px 36px;
+    text-align:center;
+  }
+  .popup-cerrar{
+    position:absolute;
+    top:14px; right:18px;
+    background:none;
+    border:none;
+    color:var(--muted);
+    font-size:1.6rem;
+    cursor:pointer;
+    line-height:1;
+  }
+  .popup-cerrar:hover{ color:var(--fg); }
+  .popup-eyebrow{
+    font-family:'Pirata One', serif;
+    color:var(--muted);
+    letter-spacing:2px;
+    text-transform:uppercase;
+    font-size:0.95rem;
+    margin-bottom:12px;
+  }
+  .popup-titulo{
+    font-family:'UnifrakturCook', cursive;
+    font-size:2rem;
+    line-height:1.2;
+    margin-bottom:16px;
+  }
+  .popup-texto{
+    color:rgba(248,248,248,0.75);
+    font-size:1.1rem;
+    margin-bottom:26px;
+  }
+  .popup-form{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .popup-form input{
+    background:rgba(248,248,248,0.05);
+    border:1px solid var(--line-strong);
+    color:var(--fg);
+    padding:12px 16px;
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.1rem;
+  }
+  .popup-form input::placeholder{ color:var(--muted); }
+  .popup-form button{
+    cursor:pointer;
+  }
+  
   /* ================= RESPONSIVO ================= */
   @media (max-width:880px){
     .hero .wrap{ grid-template-columns:1fr; text-align:center; }
@@ -455,6 +530,31 @@
 <body>
 
   <div class="fondo-personalizado"></div>
+
+  <!-- ===== POPUP REGALO ===== -->
+<div id="popupRegalo" class="popup-overlay">
+  <div class="popup-caja">
+    <button id="cerrarPopup" class="popup-cerrar" aria-label="Cerrar">×</button>
+
+    <div id="popupPaso1">
+      <p class="popup-eyebrow">Regalo de bienvenida</p>
+      <h2 class="popup-titulo">¿Quieres un marcapágina<br>+ sticker gratis?</h2>
+      <p class="popup-texto">Un kit digital para imprimir en casa, edición prototipo. Solo déjame tu correo.</p>
+
+      <form id="formPopup" action="https://formspree.io/f/xvzjlgql" method="POST" class="popup-form">
+        <input type="email" name="email" placeholder="tu@correo.com" required>
+        <button type="submit" class="btn-principal">Quiero mi kit</button>
+      </form>
+    </div>
+
+    <div id="popupPaso2" style="display:none;">
+      <p class="popup-eyebrow">Listo</p>
+      <h2 class="popup-titulo">Tu kit te espera</h2>
+      <p class="popup-texto">Descárgalo aquí abajo. Incluye guía de impresión.</p>
+      <a href="assets/DuskPages_Kit.pdf" download class="btn-principal">Descargar mi kit</a>
+    </div>
+  </div>
+</div>
   
 <header>
   <nav class="navbar">
@@ -622,6 +722,43 @@
 
   renderPuntos();
   renderPaso();
+
+  // ===== POPUP REGALO =====
+  const popup = document.getElementById('popupRegalo');
+  const cerrarPopup = document.getElementById('cerrarPopup');
+  const formPopup = document.getElementById('formPopup');
+  const popupPaso1 = document.getElementById('popupPaso1');
+  const popupPaso2 = document.getElementById('popupPaso2');
+
+  // Muestra el popup 3 segundos después de cargar, solo si no lo ha visto antes
+  if(!localStorage.getItem('duskpages_popup_visto')){
+    setTimeout(() => {
+      popup.classList.add('visible');
+    }, 3000);
+  }
+
+  cerrarPopup.addEventListener('click', () => {
+    popup.classList.remove('visible');
+    localStorage.setItem('duskpages_popup_visto', '1');
+  });
+
+  formPopup.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const datos = new FormData(formPopup);
+    try {
+      await fetch(formPopup.action, {
+        method: 'POST',
+        body: datos,
+        headers: { 'Accept': 'application/json' }
+      });
+    } catch(err) {
+      console.error('Error enviando formulario', err);
+    }
+    popupPaso1.style.display = 'none';
+    popupPaso2.style.display = 'block';
+    localStorage.setItem('duskpages_popup_visto', '1');
+  });
+  
 </script>
 
 </body>
